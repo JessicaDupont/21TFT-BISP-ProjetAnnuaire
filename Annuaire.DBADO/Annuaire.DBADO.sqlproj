@@ -76,8 +76,9 @@
     <Build Include="Tables\Messages.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="PostDeployment\Users.PostDeployment1.sql" />
-    <None Include="PostDeployment\Pays.PostDeployment1.sql" />
-    <None Include="PostDeployment\Categories.PostDeployment1.sql" />
+    <None Include="Annuaire.DBADO.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment\Script.PostDeployment1.sql" />
   </ItemGroup>
 </Project>
