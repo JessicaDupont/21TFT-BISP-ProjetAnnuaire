@@ -11,7 +11,17 @@ namespace Annuaire.Models
 {
     public class User : IUser
     {
+        public User()
+        {
+            DonneesRecuperees = false;
+        }
+        public User(int id) : this()
+        {
+            Id = id;
+        }
+
         public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
 
         public DateTime Inscription { get; set; }
         public DateTime Connexion { get; set; }

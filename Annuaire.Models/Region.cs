@@ -10,13 +10,17 @@ namespace Annuaire.Models
 {
     public class Region : IRegion
     {
-        public Region() { }
-        public Region(int id)
+        public Region() 
+        {
+            DonneesRecuperees = false;
+        }
+        public Region(int id) : this()
         {
             Id = id;
         }
 
         public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
 
         public Continents Continent { get; set; }
         public string Pays { get; set; }

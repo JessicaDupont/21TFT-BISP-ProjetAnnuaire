@@ -9,12 +9,17 @@ namespace Annuaire.Models
 {
     public class Categorie : ICategorie
     {
-        public Categorie() { }
-        public Categorie(int id)
+        public Categorie() 
+        {
+            DonneesRecuperees = false;
+        }
+        public Categorie(int id) : this()
         {
             Id = id;
         }
+
         public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
 
         public string Nom { get; set; }
         public string Description { get; set; }

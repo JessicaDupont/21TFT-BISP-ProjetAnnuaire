@@ -30,6 +30,7 @@ namespace Annuaire.DAL.Mapping
                 result.Prix = data["Prix"] == DBNull.Value ? null : (string)data["Prix"];
                 result.QuandCombien = data["QuandCombien"] == DBNull.Value ? null : (string)data["QuandCombien"];
                 result.Ville = data["RegionId"] == DBNull.Value ? null : new Region((int)data["RegionId"]);
+                result.DonneesRecuperees = true;
                 return result;
             }
             else 
@@ -40,6 +41,7 @@ namespace Annuaire.DAL.Mapping
                 result.EstSignaler = (bool)data["Alerte"];
                 result.Pourquoi = (string)data["Pourquoi"];
                 result.Prix = data["Prix"] == DBNull.Value ? null : (string)data["Prix"];
+                result.DonneesRecuperees = true;
                 return result;
             }
         }

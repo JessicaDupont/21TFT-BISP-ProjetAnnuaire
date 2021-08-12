@@ -9,16 +9,21 @@ namespace Annuaire.Models
 {
     public class ServicePropose : IServicePropose
     {
-        public ServicePropose() { }
-        public ServicePropose(int id)
+        public ServicePropose() 
+        {
+            DonneesRecuperees = false;
+        }
+        public ServicePropose(int id) : this()
         {
             Id = id;
         }
 
+        public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
+
         public ICategorie Categorie { get; set; }
         public string Pourquoi { get; set; }
         public string Prix { get; set; }
-        public int Id { get; set; }
         public bool EstSignaler { get; set; }
 
         public IPro Auteur { get; set; }

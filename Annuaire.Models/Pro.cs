@@ -9,13 +9,17 @@ namespace Annuaire.Models
 {
     public class Pro : IPro
     {
-        public Pro() { }
-        public Pro(int id)
+        public Pro() 
+        {
+            DonneesRecuperees = false;
+        }
+        public Pro(int id) : this()
         {
             Id = id;
         }
 
         public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
         public bool EstSignaler { get; set; }
 
         public string Nom { get; set; }

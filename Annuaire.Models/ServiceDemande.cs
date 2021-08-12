@@ -9,13 +9,17 @@ namespace Annuaire.Models
 {
     public class ServiceDemande : IServiceDemande
     {
-        public ServiceDemande() { }
-        public ServiceDemande(int id)
+        public ServiceDemande() 
+        {
+            DonneesRecuperees = false;
+        }
+        public ServiceDemande(int id) : this()
         {
             Id = id;
         }
 
         public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
         public bool EstSignaler { get; set; }
 
         public ICategorie Categorie { get; set; }

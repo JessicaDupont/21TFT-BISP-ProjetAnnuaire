@@ -9,13 +9,17 @@ namespace Annuaire.Models
 {
     public class Personne : IPersonne
     {
-        public Personne() { }
-        public Personne(int id)
+        public Personne() 
+        {
+            DonneesRecuperees = false;
+        }
+        public Personne(int id) : this()
         {
             Id = id;
         }
 
         public int Id { get; set; }
+        public bool DonneesRecuperees { get; set; }
         public bool EstSignaler { get; set; }
 
         public string Nom { get; set; }
