@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ToolIca.DataBases.ADO.Bases;
+using ToolIca.DataBases.Repositories;
 
 namespace Annuaire.DAL.Repositories
 {
@@ -20,22 +21,7 @@ namespace Annuaire.DAL.Repositories
             mapService = new ServiceMapping();
         }
 
-        public IServicePropose Create(IService model)
-        {
-            throw new NotImplementedException();
-        }
-
         public IServicePropose Create(IServicePropose model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IServicePropose Delete(IService model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IServicePropose Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -45,59 +31,67 @@ namespace Annuaire.DAL.Repositories
             throw new NotImplementedException();
         }
 
-        public IServicePropose Read(int id)
+        public IServicePropose Delete(int id)
         {
             throw new NotImplementedException();
         }
 
         public IEnumerable<IServicePropose> Read()
         {
-            Command cmd = new Command("" +
+            Command cmd = new Command(
                 "select * from [Services] " +
                 "where EstDemande = 0 "
                 , false);
-            IEnumerable<IServicePropose> result = connect.ExecuteReader(cmd, reader => (IServicePropose)mapService.Mapping(reader));
+            IEnumerable<IServicePropose> result = connect.ExecuteReader(
+                cmd, 
+                reader => (IServicePropose)mapService.Mapping(reader));
             return result;
         }
 
-        public IEnumerable<IServicePropose> Search(string champ, bool valeur)
+        public IServicePropose Read(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IServicePropose> Search(string champ, int valeur)
+        public IEnumerable<IServicePropose> Search(Filtre filtre)
         {
-            if (champ.Equals("CategorieId"))
-            { 
+            if (filtre.Champ.Equals("CategorieId"))
+            {
+                //faire la recherche sur toutes les categories
                 Command cmd = new Command("" +
                     "select * from [Services] " +
                     "where EstDemande = 0 " +
                     "and CategorieId = @catId ", false);
-                cmd.AddParameter("catId", valeur);
+                cmd.AddParameter("catId", filtre.Valeur);
                 IEnumerable<IServicePropose> result = connect.ExecuteReader(cmd, reader => (IServicePropose)mapService.Mapping(reader));
                 return result;
             }
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IServicePropose> Search(string champ, string valeur)
+        public IEnumerable<IServicePropose> Search(IEnumerable<Filtre> filtres)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<IServicePropose> Search(string champ, DateTime valeur)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<IServicePropose> Search(string champ, TimeSpan valeur)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<IServicePropose> Search(IDictionary<string, object> filtres)
-        {
-            throw new NotImplementedException();
+            IList<IServicePropose> result = new List<IServicePropose>();
+            IEnumerable<IServicePropose> tous;
+            Command cmd = new Command(
+                "select * from [Services] where EstDemande = 0",
+                false);
+            tous = connect.ExecuteReader(
+                cmd,
+                reader => (IServicePropose)mapService.Mapping(reader));
+            foreach (Filtre filtre in filtres)
+            {
+                switch (filtre.Champ)
+                {
+                    case "CategorieId":
+                        var t = tous.Where(x => x.Categorie.Id == (int)filtre.Valeur);
+                        result.Concat(t);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            return result;
         }
 
         public IServicePropose Update(int id, IServicePropose model)

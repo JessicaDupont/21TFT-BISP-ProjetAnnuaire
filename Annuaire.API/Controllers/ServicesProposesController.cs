@@ -1,10 +1,12 @@
 ﻿using Annuaire.DAL.Repositories.Bases;
+using Annuaire.Models.IModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToolIca.DataBases.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,10 +17,15 @@ namespace Annuaire.API.Controllers
     public class ServicesProposesController : ControllerBase
     {
         private readonly IServiceProposesRepository serviceRepository;
+        private readonly ICategorieRepository categorieRepository;
+        IList<Filtre> filtres;
 
-        public ServicesProposesController(IServiceProposesRepository serviceRepository)
+        public ServicesProposesController(
+            IServiceProposesRepository serviceRepository,
+            ICategorieRepository categorieRepository)
         {
             this.serviceRepository = serviceRepository;
+            this.categorieRepository = categorieRepository;
         }
 
         // GET: api/<ServicesProposesController>
@@ -46,7 +53,15 @@ namespace Annuaire.API.Controllers
         {
             try
             {
-                return Ok(serviceRepository.Search("CategorieId", categoryId));
+                //trouver toutes les catégories enfants
+                IEnumerable<ICategorie> enfants = categorieRepository.Search(new Filtre("Enfants", categoryId));
+                filtres = new List<Filtre>();
+                foreach (ICategorie enf in enfants)
+                { 
+                    filtres.Add(new Filtre("CategorieId", enf.Id));
+                }
+
+                return Ok(serviceRepository.Search(filtres));
             }
             catch (Exception ex)
             {

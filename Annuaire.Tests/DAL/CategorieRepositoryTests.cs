@@ -11,21 +11,21 @@ using ToolIca.DataBases.Repositories;
 namespace Annuaire.Tests.DAL
 {
     [TestClass]
-    public class ServiceProposeRepositoryTests
+    public class CategorieRepositoryTests
     {
         [TestMethod]
-        public void ReadNotNull()
+        public void SearchEnfantsNotNull()
         {
-            IServiceProposesRepository repo = new ServiceProposesRepository();
-            var result = repo.Read();
+            ICategorieRepository repo = new CategorieRepository();
+            var result = repo.Search(new Filtre("Enfants", 7));
             Assert.IsNotNull(result);
         }
         [TestMethod]
-        public void SearchCategoryNotNull()
+        public void SearchEnfantsCount()
         {
-            IServiceProposesRepository repo = new ServiceProposesRepository();
-            var result = repo.Search(new Filtre("CategorieId", 3));
-            Assert.IsNotNull(result);
+            ICategorieRepository repo = new CategorieRepository();
+            var result = repo.Search(new Filtre("Enfants", 7));
+            Assert.AreEqual(3, result.Count());
         }
     }
 }

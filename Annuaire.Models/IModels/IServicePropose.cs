@@ -12,6 +12,7 @@ namespace Annuaire.Models.IModels
 
         //IModel
         public new int Id { get; set; }
+        public new bool DonneesRecuperees { get; set; }
 
         //IAlerte
         public new bool EstSignaler {get; set;}
