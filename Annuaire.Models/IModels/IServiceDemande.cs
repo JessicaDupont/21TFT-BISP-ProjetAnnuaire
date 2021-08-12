@@ -12,5 +12,16 @@ namespace Annuaire.Models.IModels
         public IRegion Ville { get; set; }
         public string Adresse { get; set; }
         public string QuandCombien {get; set;}
+
+        //IModel
+        public new int Id { get; set; }
+
+        //IAlerte
+        public new bool EstSignaler { get; set; }
+
+        //IService
+        public new ICategorie Categorie { get; set; }
+        public new string Pourquoi { get; set; }
+        public new string Prix { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 	[Connexion] DateTime,
 	[Role] int not null,
 	[MethodeDeConnexion] int not null,
-	[Login] nvarchar(25) unique,
+	[Login] nvarchar(25),
 	[Mdp] binary,
 	[CommentaireModeration] text
 )

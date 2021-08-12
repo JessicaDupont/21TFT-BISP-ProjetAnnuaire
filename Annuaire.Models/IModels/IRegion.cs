@@ -1,5 +1,5 @@
 ﻿using Annuaire.Models.Bases;
-using ToolIca.Geographie;
+using ToolIca.Enums;
 
 namespace Annuaire.Models.IModels
 {

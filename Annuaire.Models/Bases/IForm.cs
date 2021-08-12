@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Annuaire.Models.Bases
 {
-    public interface IModel : ToolIca.Models.Bases.IModelBase
+    public interface IForm : ToolIca.Models.Bases.IFormBase
     {
-        //public int Id { get; set; }
     }
 }
