@@ -26,6 +26,7 @@ namespace Annuaire.API.Controllers
         {
             this.serviceRepository = serviceRepository;
             this.categorieRepository = categorieRepository;
+            filtres = new List<Filtre>();
         }
 
         // GET: api/<ServicesProposesController>
@@ -34,6 +35,7 @@ namespace Annuaire.API.Controllers
         {
             try
             {
+                filtres = new List<Filtre>();
                 return Ok(serviceRepository.Read());
             }
             catch (Exception ex)
@@ -49,16 +51,23 @@ namespace Annuaire.API.Controllers
 
         // GET api/<ServicesProposesController>/5
         [HttpGet("{categoryId}")]
-        public ActionResult<IEnumerable<string>> GetCategory(int categoryId)
+        public ActionResult<IEnumerable<string>> GetCategory(int categoryId, bool enfants = false)
         {
             try
             {
-                //trouver toutes les catégories enfants
-                IEnumerable<ICategorie> enfants = categorieRepository.Search(new Filtre("Enfants", categoryId));
-                filtres = new List<Filtre>();
-                foreach (ICategorie enf in enfants)
-                { 
-                    filtres.Add(new Filtre("CategorieId", enf.Id));
+                if (enfants)
+                {
+                    IEnumerable<ICategorie> categories = categorieRepository.Search(new Filtre("Enfants", categoryId));
+                    filtres = new List<Filtre>();
+                    foreach (ICategorie enf in categories)
+                    {
+                        filtres.Add(new Filtre("CategorieId", enf.Id));
+                    }
+                }
+                else 
+                {
+                    Filtre f = new Filtre("CategorieId", categoryId);
+                    filtres.Add(f);
                 }
 
                 return Ok(serviceRepository.Search(filtres));
