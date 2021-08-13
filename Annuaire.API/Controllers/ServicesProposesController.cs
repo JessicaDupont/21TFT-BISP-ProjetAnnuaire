@@ -1,10 +1,12 @@
 ﻿using Annuaire.DAL.Repositories.Bases;
+using Annuaire.Models.IModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToolIca.DataBases.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,10 +17,16 @@ namespace Annuaire.API.Controllers
     public class ServicesProposesController : ControllerBase
     {
         private readonly IServiceProposesRepository serviceRepository;
+        private readonly ICategorieRepository categorieRepository;
+        IList<Filtre> filtres;
 
-        public ServicesProposesController(IServiceProposesRepository serviceRepository)
+        public ServicesProposesController(
+            IServiceProposesRepository serviceRepository,
+            ICategorieRepository categorieRepository)
         {
             this.serviceRepository = serviceRepository;
+            this.categorieRepository = categorieRepository;
+            filtres = new List<Filtre>();
         }
 
         // GET: api/<ServicesProposesController>
@@ -27,6 +35,7 @@ namespace Annuaire.API.Controllers
         {
             try
             {
+                filtres = new List<Filtre>();
                 return Ok(serviceRepository.Read());
             }
             catch (Exception ex)
@@ -42,11 +51,26 @@ namespace Annuaire.API.Controllers
 
         // GET api/<ServicesProposesController>/5
         [HttpGet("{categoryId}")]
-        public ActionResult<IEnumerable<string>> GetCategory(int categoryId)
+        public ActionResult<IEnumerable<string>> GetCategory(int categoryId, bool enfants = false)
         {
             try
             {
-                return Ok(serviceRepository.Search("CategorieId", categoryId));
+                if (enfants)
+                {
+                    IEnumerable<ICategorie> categories = categorieRepository.Search(new Filtre("Enfants", categoryId));
+                    filtres = new List<Filtre>();
+                    foreach (ICategorie enf in categories)
+                    {
+                        filtres.Add(new Filtre("CategorieId", enf.Id));
+                    }
+                }
+                else 
+                {
+                    Filtre f = new Filtre("CategorieId", categoryId);
+                    filtres.Add(f);
+                }
+
+                return Ok(serviceRepository.Search(filtres));
             }
             catch (Exception ex)
             {

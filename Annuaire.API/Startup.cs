@@ -31,6 +31,7 @@ namespace Annuaire.API
 
             //repositories
             services.AddScoped<IServiceProposesRepository, ServiceProposesRepository>();
+            services.AddScoped<ICategorieRepository, CategorieRepository>();
 
             services.AddSwaggerGen(c =>
             {
