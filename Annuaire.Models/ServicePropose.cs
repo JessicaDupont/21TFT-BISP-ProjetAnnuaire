@@ -18,14 +18,26 @@ namespace Annuaire.Models
             Id = id;
         }
 
+        public IPro Auteur { get; set; }
+
+        public IEnumerable<IRegion> Regions { get; set; }
+
         public int Id { get; set; }
         public bool DonneesRecuperees { get; set; }
+        public bool EstSignaler { get; set; }
 
         public ICategorie Categorie { get; set; }
         public string Pourquoi { get; set; }
         public string Prix { get; set; }
-        public bool EstSignaler { get; set; }
 
-        public IPro Auteur { get; set; }
+        public override bool Equals(object obj)
+        {
+            if (typeof(IService).Equals(obj.GetType()))
+            {
+                return this.Id == ((IService)obj).Id;
+            }
+            return base.Equals(obj);
+        }
+
     }
 }

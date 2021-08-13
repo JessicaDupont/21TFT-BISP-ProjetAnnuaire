@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="PostDeployment" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Pays.sql" />
@@ -74,6 +75,7 @@
     <Build Include="Tables\Conversations.sql" />
     <Build Include="Tables\Conversations_Users.sql" />
     <Build Include="Tables\Messages.sql" />
+    <Build Include="Views\ServicesProposes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Annuaire.DBADO.publish.xml" />

@@ -18,6 +18,15 @@ namespace Annuaire.Models
         {
             Id = id;
         }
+        public Region(int id, int codePostal, string ville, string pays, string continent)
+        {
+            Id = id;
+            CodePostal = codePostal;
+            Ville = ville;
+            Pays = pays;
+            Continent = (Continents)Enum.Parse(typeof(Continents), continent);
+            DonneesRecuperees = true;
+        }
 
         public int Id { get; set; }
         public bool DonneesRecuperees { get; set; }

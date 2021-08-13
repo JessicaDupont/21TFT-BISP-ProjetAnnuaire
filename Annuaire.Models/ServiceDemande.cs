@@ -30,6 +30,15 @@ namespace Annuaire.Models
         public IRegion Ville { get; set; }
         public string Adresse { get; set; }
         public string QuandCombien { get; set; }
-        
+
+        public override bool Equals(object obj)
+        {
+            if (typeof(IService).Equals(obj.GetType()))
+            {
+                return this.Id == ((IService)obj).Id;
+            }
+            return base.Equals(obj);
+        }
+
     }
 }

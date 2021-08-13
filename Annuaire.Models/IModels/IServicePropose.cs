@@ -8,18 +8,20 @@ namespace Annuaire.Models.IModels
 {
     public interface IServicePropose : IService
     {
-        public IPro Auteur { get; set; }
+        //public IPro Auteur { get; set; }
+        public IEnumerable<IRegion> Regions { get; set; }
 
-        //IModel
+        ////IModel
         public new int Id { get; set; }
-        public new bool DonneesRecuperees { get; set; }
+        //public new bool DonneesRecuperees { get; set; }
 
-        //IAlerte
-        public new bool EstSignaler {get; set;}
+        ////IAlerte
+        //public new bool EstSignaler {get; set;}
 
-        //IService
-        public new ICategorie Categorie { get; set; }
-        public new string Pourquoi { get; set; }
-        public new string Prix { get; set; }
+        ////IService
+        //public new ICategorie Categorie { get; set; }
+        //public new string Pourquoi { get; set; }
+        //public new string Prix { get; set; }
+
     }
 }

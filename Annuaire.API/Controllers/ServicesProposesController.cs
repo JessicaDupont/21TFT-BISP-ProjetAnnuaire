@@ -50,7 +50,7 @@ namespace Annuaire.API.Controllers
         }
 
         // GET api/<ServicesProposesController>/5
-        [HttpGet("{categoryId}")]
+        [HttpGet("Categorie/{categoryId}")]
         public ActionResult<IEnumerable<string>> GetCategory(int categoryId, bool enfants = false)
         {
             try
@@ -69,6 +69,28 @@ namespace Annuaire.API.Controllers
                     Filtre f = new Filtre("CategorieId", categoryId);
                     filtres.Add(f);
                 }
+
+                return Ok(serviceRepository.Search(filtres));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new
+                    {
+                        Method = "GetCategory",
+                        Message = ex.Message
+                    });
+            }
+        }
+
+        // GET api/<ServicesProposesController>/5
+        [HttpGet("Region/{regionId}")]
+        public ActionResult<IEnumerable<string>> GetRegion(int regionId)
+        {
+            try
+            {
+                Filtre f = new Filtre("RegionId", regionId);
+                filtres.Add(f);
 
                 return Ok(serviceRepository.Search(filtres));
             }
