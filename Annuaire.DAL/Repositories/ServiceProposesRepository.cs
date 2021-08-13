@@ -71,7 +71,6 @@ namespace Annuaire.DAL.Repositories
 
         public IEnumerable<IServicePropose> Search(IEnumerable<Filtre> filtres)
         {
-            IList<IServicePropose> result = new List<IServicePropose>();
             IEnumerable<IServicePropose> tous;
             Command cmd = new Command(
                 "select * from [Services] where EstDemande = 0",
@@ -85,13 +84,12 @@ namespace Annuaire.DAL.Repositories
                 {
                     case "CategorieId":
                         var t = tous.Where(x => x.Categorie.Id == (int)filtre.Valeur);
-                        result.Concat(t);
+                        foreach (var i in t) { yield return i; }
                         break;
                     default:
                         throw new NotImplementedException();
                 }
             }
-            return result;
         }
 
         public IServicePropose Update(int id, IServicePropose model)
